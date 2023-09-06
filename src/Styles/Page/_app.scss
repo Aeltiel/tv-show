@@ -3,16 +3,17 @@
     flex-direction: column;
     height: 100vh;
     padding: 25px;
+    background-color: black;
 }
 .header{
     flex: 1;
-    background-color: blue;
+   
 }
 .tvShowSetails{
     flex: 2;
-    background-color: red;
+    
 }
 .recommandations{
     flex: 1;
-    background-color: green;
+    
 }
