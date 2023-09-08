@@ -7,4 +7,11 @@ export class TVShowApi {
     const resPopular = await axios.get(`${BASE_URL}tv/popular${API_KEY_PARAM}`);
     return resPopular.data.results;
   }
+
+  static async fetchRecommendations(tvShowId) {
+    const resReco = await axios.get(
+      `${BASE_URL}tv/${tvShowId}/recommendations${API_KEY_PARAM}`
+    );
+    return resReco.data.results;
+  }
 }

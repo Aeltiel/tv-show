@@ -4,10 +4,11 @@ import { BACKDROP_BASE_URL } from "./config";
 import TVShowDetail from "./Composants/TVShowDetail";
 import Logo from "./Composants/Logo";
 import logo from "./Assets/logo.png";
-import TVShowListItem from "./Composants/TVShowListItem";
+import TVShowList from "./Composants/TVShowList";
 
 function App() {
   const [currentTV, setCurrentTV] = useState();
+  const [recommendations, setRecommendations] = useState([]);
 
   async function fetchpopulars() {
     const populars = await TVShowApi.fetchPopulars();
@@ -16,9 +17,22 @@ function App() {
     }
   }
 
+  async function fetchReco(tvShowId) {
+    const reco = await TVShowApi.fetchRecommendations(tvShowId);
+    if (reco.length > 0) {
+      setRecommendations(reco.slice(0, 10));
+    }
+  }
+
   useEffect(() => {
     fetchpopulars();
   }, []);
+
+  useEffect(() => {
+    if (currentTV) {
+      fetchReco(currentTV.id);
+    }
+  }, [currentTV]);
 
   function setCurrentTVFromRecommendations(tvshow) {
     alert(JSON.stringify(tvshow));
@@ -51,11 +65,8 @@ function App() {
         {currentTV && <TVShowDetail tvshow={currentTV} />}
       </div>
       <div className="recommandations">
-        {currentTV && (
-          <TVShowListItem
-            tvshow={currentTV}
-            onClick={setCurrentTVFromRecommendations}
-          />
+        {recommendations && recommendations.length > 0 && (
+          <TVShowList tvShowList={recommendations} />
         )}
       </div>
     </div>
