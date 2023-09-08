@@ -2,6 +2,9 @@ import { TVShowApi } from "./Api/tv-show";
 import { useEffect, useState } from "react";
 import { BACKDROP_BASE_URL } from "./config";
 import TVShowDetail from "./Composants/TVShowDetail";
+import Logo from "./Composants/Logo";
+import logo from "./Assets/logo.png";
+import TVShowListItem from "./Composants/TVShowListItem";
 
 function App() {
   const [currentTV, setCurrentTV] = useState();
@@ -17,7 +20,9 @@ function App() {
     fetchpopulars();
   }, []);
 
-  console.log(currentTV);
+  function setCurrentTVFromRecommendations(tvshow) {
+    alert(JSON.stringify(tvshow));
+  }
 
   return (
     <div
@@ -31,8 +36,11 @@ function App() {
       <div className="header">
         <div className="row">
           <div className="col-4">
-            <div>Logo</div>
-            <div>Subtitle</div>
+            <Logo
+              image={logo}
+              title="WhatToWatch"
+              subtitle="Find a show you may like"
+            />
           </div>
           <div className="col-sm-12 col-lg-4">
             <input type="text" />
@@ -42,7 +50,14 @@ function App() {
       <div className="tvShowSetails">
         {currentTV && <TVShowDetail tvshow={currentTV} />}
       </div>
-      <div className="recommandations">Recommandations</div>
+      <div className="recommandations">
+        {currentTV && (
+          <TVShowListItem
+            tvshow={currentTV}
+            onClick={setCurrentTVFromRecommendations}
+          />
+        )}
+      </div>
     </div>
   );
 }
