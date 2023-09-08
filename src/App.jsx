@@ -5,6 +5,7 @@ import TVShowDetail from "./Composants/TVShowDetail";
 import Logo from "./Composants/Logo";
 import logo from "./Assets/logo.png";
 import TVShowList from "./Composants/TVShowList";
+import SearchBar from "./Composants/SearchBar";
 
 function App() {
   const [currentTV, setCurrentTV] = useState();
@@ -57,7 +58,7 @@ function App() {
             />
           </div>
           <div className="col-sm-12 col-lg-4">
-            <input type="text" />
+            <SearchBar />
           </div>
         </div>
       </div>
@@ -66,7 +67,7 @@ function App() {
       </div>
       <div className="recommandations">
         {recommendations && recommendations.length > 0 && (
-          <TVShowList tvShowList={recommendations} />
+          <TVShowList tvShowList={recommendations} onClickItem={setCurrentTV} />
         )}
       </div>
     </div>

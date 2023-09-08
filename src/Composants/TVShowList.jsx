@@ -1,6 +1,6 @@
 import TVShowListItem from "../Composants/TVShowListItem";
 
-function TVShowList({ tvShowList }) {
+function TVShowList({ tvShowList, onClickItem }) {
   return (
     <>
       <div className="Reco__title">You may also like : </div>
@@ -8,7 +8,7 @@ function TVShowList({ tvShowList }) {
         {tvShowList.map((tvShow) => {
           return (
             <span className="Reco__space" key={tvShow.id}>
-              <TVShowListItem tvshow={tvShow} onClick={() => ""} />
+              <TVShowListItem onClick={onClickItem} tvshow={tvShow} />
             </span>
           );
         })}
