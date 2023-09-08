@@ -12,16 +12,24 @@ function App() {
   const [recommendations, setRecommendations] = useState([]);
 
   async function fetchpopulars() {
-    const populars = await TVShowApi.fetchPopulars();
-    if (populars.length > 0) {
-      setCurrentTV(populars[0]);
+    try {
+      const populars = await TVShowApi.fetchPopulars();
+      if (populars.length > 0) {
+        setCurrentTV(populars[0]);
+      }
+    } catch (error) {
+      alert("Erreur durant la recherche des séries populaires");
     }
   }
 
   async function fetchReco(tvShowId) {
-    const reco = await TVShowApi.fetchRecommendations(tvShowId);
-    if (reco.length > 0) {
-      setRecommendations(reco.slice(0, 10));
+    try {
+      const reco = await TVShowApi.fetchRecommendations(tvShowId);
+      if (reco.length > 0) {
+        setRecommendations(reco.slice(0, 10));
+      }
+    } catch (error) {
+      alert("Erreur durant la recherche des séries recommandées");
     }
   }
 
@@ -35,8 +43,15 @@ function App() {
     }
   }, [currentTV]);
 
-  function setCurrentTVFromRecommendations(tvshow) {
-    alert(JSON.stringify(tvshow));
+  async function searchTVShow(tvShowName) {
+    try {
+      const searchRes = await TVShowApi.fetchByTitle(tvShowName);
+      if (searchRes.length > 0) {
+        setCurrentTV(searchRes[0]);
+      }
+    } catch (error) {
+      alert("Erreur durant la recherche de votre série");
+    }
   }
 
   return (
@@ -58,7 +73,7 @@ function App() {
             />
           </div>
           <div className="col-sm-12 col-lg-4">
-            <SearchBar />
+            <SearchBar onSubmit={searchTVShow} />
           </div>
         </div>
       </div>
